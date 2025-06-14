@@ -4,7 +4,7 @@
     <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport" />
-    <meta name="description" content="C++代码调用C代码的方法" />
+    <meta name="description" content="wxWidgets" />
     <meta name="hexo-theme-A4" content="v1.9.7" />
     <link rel="alternate icon" type="image/webp" href="/img/favicon.jpg">
     <title>LHY&#39;s Blog</title>
@@ -165,7 +165,7 @@
         
             
                 <div class="post-main-title" style="text-align: center;">
-                    C++代码调用C代码的方法
+                    wxWidgets
                 </div>
             
         
@@ -178,7 +178,7 @@
             <div class="post-head-meta-center">
         
                 
-                    <span>最近更新：2025-04-20</span> 
+                    <span>最近更新：2025-06-14</span> 
                 
                 
                 
@@ -196,41 +196,44 @@
     <div class="post-md">
         
             
-                
+                <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#wxWidgets-%E7%BC%96%E8%AF%91%E5%8F%8A-demo-%E5%B7%A5%E7%A8%8B%E5%88%9B%E5%BB%BA"><span class="post-toc-text">wxWidgets 编译及 demo 工程创建</span></a></li></ol>
             
         
-        <div class=".article-gallery"><p>在混合编程环境中，C++代码调用C代码是一种常见的需求，extern “C”可以实现这种需求。有很多库是用C语言编写的，为了能够在C++中使用这些库，需要使用一个特殊的语法。</p>
-<p>假设现在有一个C库，头文件是module_c.h，实现在module_c.c中，如下所示。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// file module_c.h</span></span><br><span class="line"><span class="meta">#<span class="keyword">ifndef</span> __MODULE_C_H__</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __MODULE_C_H__</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">func_in_c</span><span class="params">(<span class="type">int</span> val)</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span> <span class="comment">// __MODULE_C_H__</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// file module_c.c</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;module_c.h&quot;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">func_in_c</span><span class="params">(<span class="type">int</span> val)</span> &#123; <span class="keyword">return</span> val; &#125;</span><br></pre></td></tr></table></figure>
+        <div class=".article-gallery"><h3 id="wxWidgets-编译及-demo-工程创建"><a href="#wxWidgets-编译及-demo-工程创建" class="headerlink" title="wxWidgets 编译及 demo 工程创建"></a>wxWidgets 编译及 demo 工程创建</h3><p>第一步：下载并编译 wxWidgets 。</p>
+<p>到 wxWidgets 官网（<a target="_blank" rel="noopener" href="https://www.wxwidgets.org/downloads/">https://www.wxwidgets.org/downloads/</a>）下载源码包到本地。</p>
+<p><a href="/img/wxWidgets/20231204001.png" title="下载源码包" class="gallery-item" style="box-shadow: none;"> <img src="/img/wxWidgets/20231204001.png" alt="下载源码包"></a></p>
+<p>解压源码包，比方说解压到 wxWidgets 目录下，定位到路径<code>wxWidgets\build\msw\</code>下的 wx_vcxx.sln ，这是一个 Visual Studio 解决方案文件，打开它。</p>
+<p>查看一下路径<code>wxWidgets\lib\</code>的文件，稍后编译产生的 .lib 和 .dll 文件将会放到此路径下。</p>
+<p>切换到打开的 wx_vcxx.sln 解决方案，选择”生成”选项卡下的”批生成”，点击全选然后点击生成，等待生成完毕。如果失败，则重新生成。</p>
+<p><a href="/img/wxWidgets/20231204002.png" title="编译库" class="gallery-item" style="box-shadow: none;"> <img src="/img/wxWidgets/20231204002.png" alt="编译库"></a></p>
+<p>生成结束后检查路径<code>wxWidgets\lib\</code>，确认库文件已生成。</p>
+<p><a href="/img/wxWidgets/20231204003.png" title="库文件" class="gallery-item" style="box-shadow: none;"> <img src="/img/wxWidgets/20231204003.png" alt="库文件"></a></p>
+<p>第二步：编写测试程序</p>
+<p>在VS中新建空项目，添加一个 main.cpp 源文件，在其中粘贴如下代码。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;wx/wx.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">App</span> : <span class="keyword">public</span> wxApp &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">OnInit</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        wxFrame* window = <span class="keyword">new</span> <span class="built_in">wxFrame</span>(<span class="literal">NULL</span>, wxID_ANY, <span class="string">&quot;Windows Title&quot;</span>, wxDefaultPosition, <span class="built_in">wxSize</span>(<span class="number">600</span>, <span class="number">400</span>));</span><br><span class="line">        wxBoxSizer* sizer = <span class="keyword">new</span> <span class="built_in">wxBoxSizer</span>(wxHORIZONTAL);</span><br><span class="line">        wxStaticText* text = <span class="keyword">new</span> <span class="built_in">wxStaticText</span>(window, wxID_ANY, <span class="string">&quot;Hello, World!&quot;</span>,</span><br><span class="line">            wxDefaultPosition, wxDefaultSize, wxALIGN_CENTRE_HORIZONTAL);</span><br><span class="line">        text-&gt;<span class="built_in">SetFont</span>(<span class="built_in">wxFont</span>(<span class="number">20</span>, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL));</span><br><span class="line">        sizer-&gt;<span class="built_in">Add</span>(text, <span class="number">1</span>, wxALIGN_CENTER);</span><br><span class="line">        window-&gt;<span class="built_in">SetSizer</span>(sizer);</span><br><span class="line">        window-&gt;<span class="built_in">Show</span>();</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">wxIMPLEMENT_APP</span>(App);</span><br></pre></td></tr></table></figure>
 
-<p>如果需要在C++源文件main.cpp中包含module_c.h并调用func_in_c函数，visual studio在链接阶段会报错LNK2019无法解析的外部符号，代码如下所示。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;module_c.h&quot;</span></span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">func_in_c</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>由于C、C++的编译器对函数的编译处理是不完全相同的，尤其是对于C++来说其支持函数的重载，编译后的函数一般根据函数名和形参类型对函数进行重命名，而C则没有这个机制，这就会导致，在C++源文件中，函数func_in_c编译之后名称可能变成了func_in_c_@xxx的形式，从而导致链接时无法根据文件名找到对应的实现，所以需要在C++代码中调用C函数时，需要一个机制明确指明所调用的函数是一个C风格的函数，即使用extern “C”修饰。代码如下所示。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// file module_c.h</span></span><br><span class="line"><span class="meta">#<span class="keyword">ifndef</span> __MODULE_C_H__</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __MODULE_C_H__</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> &#123;</span><br><span class="line">    <span class="type">int</span> <span class="title function_">func_in_c</span><span class="params">(<span class="type">int</span> val)</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span> <span class="comment">// __MODULE_C_H__</span></span></span><br></pre></td></tr></table></figure>
-
-<p>所作的改动仅仅是把C风格的函数声明在头文件的extern “C”块中，这样C++编译器就知道这部分代码应该按照C语言的编译方式进行编译，就不会对函数名进行重命名了。</p>
+<p>按下 Ctrl+Shift+B 构建，当然是报错的。我们还需要将 wxWidgets 库的头文件和库文件配置到项目中。</p>
+<p>首先，将编译之后的 wxWidgets 文件夹路径加入系统环境变量，比如我这里将 wxWidgets 路径设为”ENV_wxWidgets”。</p>
+<p><a href="/img/wxWidgets/20231204004.png" title="环境变量" class="gallery-item" style="box-shadow: none;"> <img src="/img/wxWidgets/20231204004.png" alt="环境变量"></a></p>
+<p>然后，在VS中右键项目选择属性打开属性页，改三个地方。</p>
+<ul>
+<li>属性页”C&#x2F;C++”下”常规”中的”附加包含目录”，填入值<code>$(ENV_wxWidgets)\include;$(ENV_wxWidgets)\include\msvc;</code>，这里的”$(ENV_wxWidgets)”就是取环境变量”ENV_wxWidgets”的路径，取到的自然就是 wxWidgets 源码解压的路径，再拼接上后续的字符串，就指定了附加包含目录为源码目录下的 include 和 include&#x2F;msvc 文件夹。</li>
+<li>属性页”链接器”下”常规”中的”附加库目录”，填入值”$(ENV_wxWidgets)\lib\vc_x64_lib”。注意，如果是平台是32位的，需要填入”$(ENV_wxWidgets)\lib\vc_lib”。如下图所示，如果生成出错，不妨检查下当前所选配置以及平台是否设置了正确的属性。</li>
+<li>属性页”链接器”下”系统”中的”子系统”，选择窗口。</li>
+</ul>
+<p><a href="/img/wxWidgets/20231204005.png" title="属性页" class="gallery-item" style="box-shadow: none;"> <img src="/img/wxWidgets/20231204005.png" alt="属性页"></a></p>
+<p>至此，再 Ctrl+Shift+B 接着 F5 走一波，程序就跑起来了。</p>
+<p><a href="/img/wxWidgets/20231204006.png" title="成功运行" class="gallery-item" style="box-shadow: none;"> <img src="/img/wxWidgets/20231204006.png" alt="成功运行"></a></p>
 </div>
     </div>
 
     <div class="post-meta">
         <i>
         
-            <span>2025-04-20</span>
-            
-                <span>该篇文章被 lianghongyu</span>
+            <span>2025-06-14</span>
             
             
              
-                <span>归为分类:
-                    
-                    
-                        <a href='/categories/C/'>
-                            C++
-                        </a>
-                    
-                </span>
-            
         
         </i>
     </div>
@@ -242,11 +245,9 @@
     
             <div class="post-footer-pre-next">
                 
-                    <span>上一篇：<a href='/2025/06/14/wxWidgets/'>wxWidgets</a></span>
-                
 
                 
-                    <span class="post-footer-pre-next-last-span-right">下一篇：<a href="/2025/04/14/%E5%8D%9A%E5%AE%A2%E7%AB%99%E7%82%B9%E7%BB%B4%E6%8A%A4%E6%8C%87%E5%8D%97/">博客站点维护指南</a>
+                    <span class="post-footer-pre-next-last-span-right">下一篇：<a href="/2025/04/20/C-%E4%BB%A3%E7%A0%81%E8%B0%83%E7%94%A8C%E4%BB%A3%E7%A0%81%E7%9A%84%E6%96%B9%E6%B3%95/">C++代码调用C代码的方法</a>
                     </span>
                 
             </div>
