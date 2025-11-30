@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+    <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport" />
+    <meta name="description" content="Pimpl惯用法" />
+    <meta name="hexo-theme-A4" content="v1.9.7" />
+    <link rel="alternate icon" type="image/webp" href="/img/favicon.jpg">
+    <title>LHY&#39;s Blog</title>
+
+    
+        
+<link rel="stylesheet" href="/css/highlight/style1.css">
+
+        
+<link rel="stylesheet" href="/css/reset.css">
+
+        
+<link rel="stylesheet" href="/css/markdown.css">
+
+        
+<link rel="stylesheet" href="/css/fonts.css">
+ 
+         <!--注意：首页既不是post也不是page-->
+        
+        
+        
+<link rel="stylesheet" href="/css/ui.css">
+ 
+        
+<link rel="stylesheet" href="/css/style.css">
+
+
+        
+            <!--返回顶部css-->
+            
+<link rel="stylesheet" href="/css/returnToTop.css">
+
+            
+<link rel="stylesheet" href="/css/unicons.css">
+
+        
+        
+    
+
+    
+        
+<link rel="stylesheet" href="/css/returnToLastPage.css">
+
+    
+    
+   
+<link rel="stylesheet" href="/css/lightgallery-bundle.min.css">
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+    
+    
+        <style>
+            .index-main{
+                max-width:  1200px;
+            }
+        </style>
+
+    
+    
+
+
+
+    
+        <style>
+            .paper-main{
+                max-width:  1200px;
+            }
+        </style>
+
+    
+    
+
+    
+    
+    
+    <body>
+        <script src="/js/darkmode-js.min.js"></script>
+        
+        <script>
+            const options = {
+                bottom: '40px', // default: '32px'
+                right: 'unset', // default: '32px'
+                left: '42px', // default: 'unset'
+                time: '0.3s', // default: '0.3s'
+                mixColor: '#fff', // default: '#fff'
+                backgroundColor: ' #e4e4e4 ',  // default: '#fff'
+                buttonColorDark: '#100f2c',  // default: '#100f2c'
+                buttonColorLight: '#fff', // default: '#fff'
+                saveInCookies: true, // default: true,
+                label: '🌓', // default: ''
+                autoMatchOsTheme: true // default: true
+            }
+            const darkmode = new Darkmode(options);
+            darkmode.showWidget();
+        </script>
+        
+        
+        <div class="paper">
+            
+            
+            
+            
+                <div class="shadow-drop-2-bottom paper-main">
+                    
+
+
+<div class="header">
+    <div class="header-container">
+        <style>
+            .header-img {
+                width: 56px;
+                height: auto;
+                object-fit: cover; /* 保持图片比例 */
+                transition: transform 0.3s ease-in-out; 
+                border-radius: 50%; 
+            }
+            
+        </style>
+        <img 
+            alt="^-^" 
+            cache-control="max-age=86400" 
+            class="header-img" 
+            src="/img/favicon.jpg" 
+        />
+        <div class="header-content">
+            <a class="logo" href="/">LHY&#39;s Blog</a> 
+            <span class="description"></span> 
+        </div>
+    </div>
+    
+   
+    <ul class="nav">
+        
+            
+                <li><a href="/">首页</a></li>
+            
+        
+            
+                <li><a href="/list/">文章</a></li>
+            
+        
+            
+                <li><a href="/tags/">标签</a></li>
+            
+        
+            
+                <li><a href="/categories/">分类</a></li>
+            
+        
+    </ul>
+</div> 
+        
+                    
+                    
+
+                    
+                    
+                    
+                    <!--说明是文章post页面-->
+                    
+                        <div class="post-main">
+    
+
+    
+        
+            
+                <div class="post-main-title" style="text-align: center;">
+                    Pimpl惯用法
+                </div>
+            
+        
+      
+    
+
+    
+
+        
+            <div class="post-head-meta-center">
+        
+                
+                    <span>最近更新：2025-12-01</span> 
+                
+                
+                
+                
+                    
+                        &nbsp; | &nbsp;
+                    
+                    <span id="busuanzi_container_page_pv">
+                        阅读量：<span id="busuanzi_value_page_pv"></span>次
+                    </span>
+                
+            </div>
+    
+
+    <div class="post-md">
+        
+            
+                <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1%E3%80%81%E4%BD%BF%E7%94%A8Pimpl"><span class="post-toc-text">1、使用Pimpl</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2%E3%80%81%E5%A4%8D%E5%88%B6%E8%AF%AD%E4%B9%89"><span class="post-toc-text">2、复制语义</span></a></li></ol>
+            
+        
+        <div class=".article-gallery"><blockquote>
+<p><em>Pimpl即“Pointer to Implementation”（指向实现的指针）的缩写，这是一种受限于C++特定限制的惯用法，主要用来避免在头文件中暴露内部的实现细节。</em></p>
+</blockquote>
+<h3 id="1、使用Pimpl"><a href="#1、使用Pimpl" class="headerlink" title="1、使用Pimpl"></a>1、使用Pimpl</h3><p>考虑一个Timer类，该类的对象在构造时记录创建的时间戳，在析构时报告对象的生存时间，以下是一个简单的实现。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Timer.h</span></span><br><span class="line"><span class="meta">#<span class="keyword">pragma</span> once</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Timer</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">explicit</span> <span class="title">Timer</span><span class="params">(<span class="type">const</span> std::string&amp; name)</span></span>;</span><br><span class="line">    ~<span class="built_in">Timer</span>();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">restart</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="function"><span class="type">double</span> <span class="title">get_elapsed</span><span class="params">()</span> <span class="type">const</span></span>;</span><br><span class="line"></span><br><span class="line">    std::string m_timerName;</span><br><span class="line">    <span class="type">double</span> m_startTime;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>如果将这个类提供给其他人使用，其他人获得头文件Timer.h之后，除了公有的接口restart能够调用之外，私有的接口get_elapsed和成员变量都无法调用和访问。所以对于Timer API的使用者来说，头文件中暴露的私有成员只会影响API的简洁性，而对于API开发者来说，后续对内部实现细节的调整都会直接反映到头文件中。基于此，我们可以将内部的实现细节隐藏在源文件中，而头文件仅将必要的方法暴露为公有（即构造函数、析构函数和restart）。以下是使用Pimpl重构之后的Timer类。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Timer.h</span></span><br><span class="line"><span class="meta">#<span class="keyword">pragma</span> once</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Timer</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">explicit</span> <span class="title">Timer</span><span class="params">(<span class="type">const</span> std::string&amp; name)</span></span>;</span><br><span class="line">    ~<span class="built_in">Timer</span>();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">restart</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">class</span> <span class="title class_">PrivImpl</span>;</span><br><span class="line">    PrivImpl* m_impl;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Timer.cpp</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;Timer.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Timer</span>::PrivImpl</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">double</span> <span class="title">get_elapsed</span><span class="params">()</span> <span class="type">const</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="comment">// 假设当前时间是10</span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">10</span> - m_startTime;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    std::string m_timerName;</span><br><span class="line">    <span class="type">double</span> m_startTime;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">Timer::<span class="built_in">Timer</span>(<span class="type">const</span> std::string&amp; name)</span><br><span class="line">    : <span class="built_in">m_impl</span>(<span class="keyword">new</span> Timer::<span class="built_in">PrivImpl</span>())</span><br><span class="line">&#123;</span><br><span class="line">    m_impl-&gt;m_timerName = name;</span><br><span class="line">    <span class="comment">// 假设初始时间是0</span></span><br><span class="line">    m_impl-&gt;m_startTime = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Timer::~<span class="built_in">Timer</span>()</span><br><span class="line">&#123;</span><br><span class="line">    std::cout &lt;&lt; m_impl-&gt;m_timerName &lt;&lt; <span class="string">&quot;:took &quot;</span> </span><br><span class="line">        &lt;&lt; m_impl-&gt;<span class="built_in">get_elapsed</span>() &lt;&lt; std::endl;</span><br><span class="line">    <span class="keyword">delete</span> m_impl;</span><br><span class="line">    m_impl = <span class="literal">nullptr</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">Timer::restart</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    m_impl = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// main.cpp</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;Timer.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">Timer <span class="title">timer</span><span class="params">(<span class="string">&quot;main&quot;</span>)</span></span>;</span><br><span class="line">    timer.<span class="built_in">restart</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>重构之后的Timer类头文件中包含了暴露的公有成员和一个私有的指向Timer::PrivImpl类型变量的指针，并在Timer的构造函数和析构函数中分配和销毁该指针指向的对象，而原本Timer的私有成员被放到了Timer::PrivImpl类中，Timer类的内部实现细节需要通过Timer::PrivImpl指针去访问相关的变量。这样，其他人拿到Timer的头文件也无法了解和Timer实现相关的私有变量，而对Timer实现细节的更改也不会体现在头文件中。</p>
+<hr>
+<h3 id="2、复制语义"><a href="#2、复制语义" class="headerlink" title="2、复制语义"></a>2、复制语义</h3><p>如果没有为类显式定义复制构造函数和赋值操作符，C++编译器会为类创建默认的复制构造函数和赋值操作符，但是这种默认的构造函数只能执行对象的浅复制，即简单地拷贝成员变量的值。对于Timer类的对象，这意味着如果用户复制了Timer对象，则两个对象中的m_impl是一样的，即指向了同一个Timer::PrivImpl对象。</p>
+<p>而在Timer的析构函数中，会释放m_impl指向的对象，那么当复制前后的两个Timer对象析构时，就会对同一个m_impl指向的对象进行两次释放，这会导致崩溃，如下所示。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Timer <span class="title">t0</span><span class="params">(<span class="string">&quot;main&quot;</span>)</span></span>;</span><br><span class="line"><span class="function">Timer <span class="title">t1</span><span class="params">(t0)</span></span>;</span><br><span class="line"><span class="comment">// Timer t1 = t0;</span></span><br></pre></td></tr></table></figure>
+
+<p>处理这个问题有以下两种可选方案。</p>
+<ul>
+<li>禁止复制类。如果不打算让用户创建对象的副本，那么可以将对象声明为不可复制的（<a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.6.1/NonCopyable_8hpp_source.php">参考SFML::NonCopyable</a>）。</li>
+<li>显式定义复制语义。如果希望用户能够复制采用Pimpl的类的对象，就应该生命并定义自己的复制构造函数和赋值操作符。它们可以执行对象的深复制，即创建Timer::PrivImpl对象的副本，而不是仅复制指针。</li>
+</ul>
+<p>关于第一种禁止复制类的解决方案，有两种实现方法。一种是将构造函数和赋值操作符声明为私有成员，这样用户的复制代码将会在编译时报错，因为无法访问私有的复制语义成员。另一种是将构造函数和赋值操作符声明为公有成员但不提供实现，这样用户的复制代码将会在链接时报错，因为无法找到复制语义成员的实现。其实还有第三种方案，从C++11起，可以将构造函数声明为delete的，具体可以参考<a target="_blank" rel="noopener" href="https://en.cppreference.com/w/cpp/language/default_constructor.html">Cppreference|Default constructors (4)</a>。</p>
+<p>以下是两种禁止复制类的实现方法。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 声明为私有成员</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="built_in">Timer</span>(<span class="type">const</span> Timer&amp; other);</span><br><span class="line">	<span class="type">const</span> Timer&amp; <span class="keyword">operator</span> =(<span class="type">const</span> Timer&amp; other);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 声明为公有成员但不提供实现</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="built_in">Timer</span>(<span class="type">const</span> Timer&amp; other);</span><br><span class="line">	<span class="type">const</span> Timer&amp; <span class="keyword">operator</span> =(<span class="type">const</span> Timer&amp; other);</span><br></pre></td></tr></table></figure>
+</div>
+    </div>
+
+    <div class="post-meta">
+        <i>
+        
+            <span>2025-11-30</span>
+            
+                <span>该篇文章被 lianghongyu</span>
+            
+            
+                <span>打上标签:
+                    
+                    
+                        <a href='/tags/C-C/'>
+                            C/C++
+                        </a>
+                    
+                        <a href='/tags/C-API%E8%AE%BE%E8%AE%A1/'>
+                            C++ API设计
+                        </a>
+                    
+                </span>
+             
+             
+                <span>归为分类:
+                    
+                    
+                        <a href='/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/'>
+                            学习笔记
+                        </a>
+                    
+                </span>
+            
+        
+        </i>
+    </div>
+    <br>
+    
+    
+        
+            
+    
+            <div class="post-footer-pre-next">
+                
+
+                
+                    <span class="post-footer-pre-next-last-span-right">下一篇：<a href="/2025/06/14/wxWidgets/">wxWidgets</a>
+                    </span>
+                
+            </div>
+    
+        
+    
+
+    
+        
+
+     
+</div>
+
+
+
+                                      
+                    
+                    
+                    <div class="footer">
+    
+        <span> 
+            © 1949-2025 China 
+
+            
+                
+
+            
+        </span>
+       
+    
+</div>
+
+
+
+<!--这是指一条线往下的内容-->
+<div class="footer-last">
+    
+            <span></span>
+            
+    
+</div>
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+
+    <!--目录-->
+    
+
+    
+<script src="/js/randomHeaderContent.js"></script>
+
+    <!--回到顶部按钮-->
+    
+        
+<script src="/js/returnToTop.js"></script>
+
+    
+
+    
+        
+<script src="/js/returnToLastPage.js"></script>
+
+    
+
+
+
+
+
+<script src="/js/lightgallery/lightgallery.umd.min.js"></script>
+
+
+
+<script src="/js/lightgallery/plugins/lg-thumbnail.umd.min.js"></script>
+
+
+
+<script src="/js/lightgallery/plugins/lg-fullscreen.umd.min.js"></script>
+
+
+<script src="/js/lightgallery/plugins/lg-autoplay.umd.min.js"></script>
+
+
+<script src="/js/lightgallery/plugins/lg-zoom.umd.min.js"></script>
+
+
+<script src="/js/lightgallery/plugins/lg-rotate.umd.min.js"></script>
+
+
+<script src="/js/lightgallery/plugins/lg-paper.umd.min.js"></script>
+
+
+
+
+<script type="text/javascript">
+     
+    if (typeof lightGallery !== "undefined") {
+        var options1 = {
+            selector: '.gallery-item',
+            plugins: [lgThumbnail, lgFullscreen, lgAutoplay, lgZoom, lgRotate, lgPager], // 启用插件
+            thumbnail: true,          // 显示缩略图
+            zoom: true,               // 启用缩放功
+            rotate: true,             // 启用旋转功能能
+            autoplay: true,        // 启用自动播放功能
+            fullScreen: true,      // 启用全屏功能
+            pager: false, //页码,
+            zoomFromOrigin: true,   // 从原始位置缩放
+            actualSize: true,       // 启用查看实际大小的功能
+            enableZoomAfter: 300,    // 延迟缩放，确保图片加载完成后可缩放
+        };
+        lightGallery(document.getElementsByClassName('.article-gallery')[0], options1); // 修复选择器
+    }
+    
+</script>
+
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> 
+
+                </div>
+            
+            
+                <!-- 回到顶部的按钮-->  
+                <div class="progress-wrap shadow-drop-2-bottom">
+                    <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+                        <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"/>
+                    </svg>
+                </div>
+            
+            
+                <!-- 返回的按钮-->  
+                <div class="return-to-last-progress-wrap shadow-drop-2-bottom">
+                    <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+                        <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"/>
+                    </svg>
+                </div>
+            
+    </body>
+</html>
