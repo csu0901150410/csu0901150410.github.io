@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+    <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport" />
+    <meta name="description" content="Windows系统使用帮助" />
+    <meta name="hexo-theme-A4" content="v1.9.7" />
+    <link rel="alternate icon" type="image/webp" href="/img/favicon.jpg">
+    <title>LHY&#39;s Blog</title>
+
+    
+        
+<link rel="stylesheet" href="/css/highlight/style1.css">
+
+        
+<link rel="stylesheet" href="/css/reset.css">
+
+        
+<link rel="stylesheet" href="/css/markdown.css">
+
+        
+<link rel="stylesheet" href="/css/fonts.css">
+ 
+         <!--注意：首页既不是post也不是page-->
+        
+        
+        
+<link rel="stylesheet" href="/css/ui.css">
+ 
+        
+<link rel="stylesheet" href="/css/style.css">
+
+
+        
+            <!--返回顶部css-->
+            
+<link rel="stylesheet" href="/css/returnToTop.css">
+
+            
+<link rel="stylesheet" href="/css/unicons.css">
+
+        
+        
+    
+
+    
+        
+<link rel="stylesheet" href="/css/returnToLastPage.css">
+
+    
+    
+   
+<link rel="stylesheet" href="/css/lightgallery-bundle.min.css">
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+    
+    
+        <style>
+            .index-main{
+                max-width:  1200px;
+            }
+        </style>
+
+    
+    
+
+
+
+    
+        <style>
+            .paper-main{
+                max-width:  1200px;
+            }
+        </style>
+
+    
+    
+
+    
+    
+    
+    <body>
+        <script src="/js/darkmode-js.min.js"></script>
+        
+        <script>
+            const options = {
+                bottom: '40px', // default: '32px'
+                right: 'unset', // default: '32px'
+                left: '42px', // default: 'unset'
+                time: '0.3s', // default: '0.3s'
+                mixColor: '#fff', // default: '#fff'
+                backgroundColor: ' #e4e4e4 ',  // default: '#fff'
+                buttonColorDark: '#100f2c',  // default: '#100f2c'
+                buttonColorLight: '#fff', // default: '#fff'
+                saveInCookies: true, // default: true,
+                label: '🌓', // default: ''
+                autoMatchOsTheme: true // default: true
+            }
+            const darkmode = new Darkmode(options);
+            darkmode.showWidget();
+        </script>
+        
+        
+        <div class="paper">
+            
+            
+            
+            
+                <div class="shadow-drop-2-bottom paper-main">
+                    
+
+
+<div class="header">
+    <div class="header-container">
+        <style>
+            .header-img {
+                width: 56px;
+                height: auto;
+                object-fit: cover; /* 保持图片比例 */
+                transition: transform 0.3s ease-in-out; 
+                border-radius: 50%; 
+            }
+            
+        </style>
+        <img 
+            alt="^-^" 
+            cache-control="max-age=86400" 
+            class="header-img" 
+            src="/img/favicon.jpg" 
+        />
+        <div class="header-content">
+            <a class="logo" href="/">LHY&#39;s Blog</a> 
+            <span class="description"></span> 
+        </div>
+    </div>
+    
+   
+    <ul class="nav">
+        
+            
+                <li><a href="/">首页</a></li>
+            
+        
+            
+                <li><a href="/list/">文章</a></li>
+            
+        
+            
+                <li><a href="/tags/">标签</a></li>
+            
+        
+            
+                <li><a href="/categories/">分类</a></li>
+            
+        
+    </ul>
+</div> 
+        
+                    
+                    
+
+                    
+                    
+                    
+                    <!--说明是文章post页面-->
+                    
+                        <div class="post-main">
+    
+
+    
+        
+            
+                <div class="post-main-title" style="text-align: center;">
+                    Windows系统使用帮助
+                </div>
+            
+        
+      
+    
+
+    
+
+        
+            <div class="post-head-meta-center">
+        
+                
+                    <span>最近更新：2025-12-03</span> 
+                
+                
+                
+                
+                    
+                        &nbsp; | &nbsp;
+                    
+                    <span id="busuanzi_container_page_pv">
+                        阅读量：<span id="busuanzi_value_page_pv"></span>次
+                    </span>
+                
+            </div>
+    
+
+    <div class="post-md">
+        
+            
+                <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F"><span class="post-toc-text">文件系统</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E5%8F%AF%E6%89%A7%E8%A1%8C%E7%A8%8B%E5%BA%8F"><span class="post-toc-text">可执行程序</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E5%91%BD%E4%BB%A4%E6%8F%90%E7%A4%BA%E7%AC%A6"><span class="post-toc-text">命令提示符</span></a></li></ol>
+            
+        
+        <div class=".article-gallery"><blockquote>
+<p><em>Windows系统可能是大部分人日常使用接触最多的操作系统了，但是对于缺乏计算机相关知识人来说，更多的使用范围是局限在各个软件之内，比如Office、浏览器等，而对于Windows系统的一些基础概念是比较陌生的。如果在使用Windows系统时遇到问题，在向其他人求助时甚至很难准确的描述问题。本文针对日常使用可能涉及的Windows系统相关的概念进行了收集，通过阅读本文，可以在日常使用的基础上进一步了解Windows系统相关的概念。</em></p>
+</blockquote>
+<h3 id="文件系统"><a href="#文件系统" class="headerlink" title="文件系统"></a>文件系统</h3><p>双击桌面上的“此电脑”图标或者按下快捷键Win+E会弹出一个窗口，这个窗口叫做资源管理器窗口，如下图所示。在窗口左侧的面板中点击“此电脑”即可在右侧看到文件夹和设备驱动器的图标，其中设备驱动器图标上的文本表明分别是C、M、V盘，这个也叫盘符。</p>
+<p><a href="/img/Windows%E7%B3%BB%E7%BB%9F%E4%BD%BF%E7%94%A8%E5%B8%AE%E5%8A%A9/20251203000.png" class="gallery-item" style="box-shadow: none;"> <img src="/img/Windows%E7%B3%BB%E7%BB%9F%E4%BD%BF%E7%94%A8%E5%B8%AE%E5%8A%A9/20251203000.png"></a></p>
+<p>双击M盘图标，右侧面板即显示M盘下的文件夹和文件视图，如下图所示。</p>
+<p><a href="/img/Windows%E7%B3%BB%E7%BB%9F%E4%BD%BF%E7%94%A8%E5%B8%AE%E5%8A%A9/20251203001.png" class="gallery-item" style="box-shadow: none;"> <img src="/img/Windows%E7%B3%BB%E7%BB%9F%E4%BD%BF%E7%94%A8%E5%B8%AE%E5%8A%A9/20251203001.png"></a></p>
+<p>接着双击某个文件夹图标，右侧面板即显示该文件夹下的子文件夹和文件，如下图所示，黄色文件夹图标的是文件夹，其他均是文件。</p>
+<p><a href="/img/Windows%E7%B3%BB%E7%BB%9F%E4%BD%BF%E7%94%A8%E5%B8%AE%E5%8A%A9/20251203002.png" class="gallery-item" style="box-shadow: none;"> <img src="/img/Windows%E7%B3%BB%E7%BB%9F%E4%BD%BF%E7%94%A8%E5%B8%AE%E5%8A%A9/20251203002.png"></a></p>
+<p>上述的描述中涉及了盘符、文件夹、文件的概念，这基本就是最常接触的文件系统的概念，这些概念是对物理（实体）磁盘的抽象。电脑上安装有磁盘，这是一种存储设备，类比U盘进行理解，假设某个文件需要存储在磁盘上，实际就是需要占用磁盘的某块空间，更形象的理解就是，用箱子来装某个物体，物体占据着箱子的某块空间。有时候，需要对箱子隔成几块进行使用，每一块用来放置不同分类的物体，比如其中一块用来放绿豆，另一块用来放黄豆。对于磁盘，也可以做类似的分块处理，只不过并不是对磁盘实体进行分块，而是在逻辑上进行分块，比如说磁盘上的某块空间叫做C盘，而另一块空间叫做D盘，这种分块的逻辑，就引申出了盘符的概念，可以理解为，盘符就是对磁盘某块空间的称谓而已。</p>
+<p>现在假设，往C盘中第一次放入文件A和B，第二次放入文件C和D，如何区分两次放入的文件就成了问题。文件夹的概念可以解决文件分类的问题，可以在两次放入前先创建文件夹，再将文件放入对应的文件夹。其实，创建文件夹的行为，和分出不同盘符或者说对箱子隔出不同区域的行为逻辑是一样的，即给不同的磁盘空间创建贴上不同的标签，最后就可以根据标签放入具体的文件了。盘符其实就是一个文件夹，一个子文件夹有上级文件夹和下级文件夹，而盘符没有上级文件夹，可以认为是根文件夹，其下的各个文件夹和文件，像一棵树一样不断分叉。</p>
+<p>文件夹的作用可以理解为对文件的分类，如果需要描述某个文件夹，则需要从根文件夹开始描述，比如M盘下的Python313文件夹下的python.exe文件，从这个角度看，文件的定位，需要用到文件夹，这个定位，就叫做文件的路径，比如”M:\Python313\python.exe”。文件夹和文件以及其他一些没有提及的概念，组成了文件系统的概念，通过文件系统概念，我们可以用虚拟的文件路径去描述位于实体磁盘上的某块空间，这块空间就是文件。</p>
+<p>总的来说，为了描述实体磁盘上的某块空间，衍生出了文件系统的虚拟概念。通过文件系统，就不需要再去关注实体磁盘的情况了（即使要关注也很难）。</p>
+<h3 id="可执行程序"><a href="#可执行程序" class="headerlink" title="可执行程序"></a>可执行程序</h3><h3 id="命令提示符"><a href="#命令提示符" class="headerlink" title="命令提示符"></a>命令提示符</h3></div>
+    </div>
+
+    <div class="post-meta">
+        <i>
+        
+            <span>2025-12-03</span>
+            
+                <span>该篇文章被 lianghongyu</span>
+            
+            
+                <span>打上标签:
+                    
+                    
+                        <a href='/tags/Windows/'>
+                            Windows
+                        </a>
+                    
+                </span>
+             
+             
+                <span>归为分类:
+                    
+                    
+                        <a href='/categories/%E5%A4%87%E5%BF%98%E5%BD%95/'>
+                            备忘录
+                        </a>
+                    
+                </span>
+            
+        
+        </i>
+    </div>
+    <br>
+    
+    
+        
+            
+    
+            <div class="post-footer-pre-next">
+                
+
+                
+                    <span class="post-footer-pre-next-last-span-right">下一篇：<a href="/2025/11/30/Pimpl%E6%83%AF%E7%94%A8%E6%B3%95/">Pimpl惯用法</a>
+                    </span>
+                
+            </div>
+    
+        
+    
+
+    
+        
+
+     
+</div>
+
+
+
+                                      
+                    
+                    
+                    <div class="footer">
+    
+        <span> 
+            © 1949-2025 China 
+
+            
+                
+
+            
+        </span>
+       
+    
+</div>
+
+
+
+<!--这是指一条线往下的内容-->
+<div class="footer-last">
+    
+            <span></span>
+            
+    
+</div>
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+
+    <!--目录-->
+    
+
+    
+<script src="/js/randomHeaderContent.js"></script>
+
+    <!--回到顶部按钮-->
+    
+        
+<script src="/js/returnToTop.js"></script>
+
+    
+
+    
+        
+<script src="/js/returnToLastPage.js"></script>
+
+    
+
+
+
+
+
+<script src="/js/lightgallery/lightgallery.umd.min.js"></script>
+
+
+
+<script src="/js/lightgallery/plugins/lg-thumbnail.umd.min.js"></script>
+
+
+
+<script src="/js/lightgallery/plugins/lg-fullscreen.umd.min.js"></script>
+
+
+<script src="/js/lightgallery/plugins/lg-autoplay.umd.min.js"></script>
+
+
+<script src="/js/lightgallery/plugins/lg-zoom.umd.min.js"></script>
+
+
+<script src="/js/lightgallery/plugins/lg-rotate.umd.min.js"></script>
+
+
+<script src="/js/lightgallery/plugins/lg-paper.umd.min.js"></script>
+
+
+
+
+<script type="text/javascript">
+     
+    if (typeof lightGallery !== "undefined") {
+        var options1 = {
+            selector: '.gallery-item',
+            plugins: [lgThumbnail, lgFullscreen, lgAutoplay, lgZoom, lgRotate, lgPager], // 启用插件
+            thumbnail: true,          // 显示缩略图
+            zoom: true,               // 启用缩放功
+            rotate: true,             // 启用旋转功能能
+            autoplay: true,        // 启用自动播放功能
+            fullScreen: true,      // 启用全屏功能
+            pager: false, //页码,
+            zoomFromOrigin: true,   // 从原始位置缩放
+            actualSize: true,       // 启用查看实际大小的功能
+            enableZoomAfter: 300,    // 延迟缩放，确保图片加载完成后可缩放
+        };
+        lightGallery(document.getElementsByClassName('.article-gallery')[0], options1); // 修复选择器
+    }
+    
+</script>
+
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> 
+
+                </div>
+            
+            
+                <!-- 回到顶部的按钮-->  
+                <div class="progress-wrap shadow-drop-2-bottom">
+                    <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+                        <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"/>
+                    </svg>
+                </div>
+            
+            
+                <!-- 返回的按钮-->  
+                <div class="return-to-last-progress-wrap shadow-drop-2-bottom">
+                    <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+                        <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"/>
+                    </svg>
+                </div>
+            
+    </body>
+</html>
