@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+    <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport" />
+    <meta name="description" content="CMake笔记" />
+    <meta name="hexo-theme-A4" content="v1.9.7" />
+    <link rel="alternate icon" type="image/webp" href="/img/favicon.jpg">
+    <title>LHY&#39;s Blog</title>
+
+    
+        
+<link rel="stylesheet" href="/css/highlight/style1.css">
+
+        
+<link rel="stylesheet" href="/css/reset.css">
+
+        
+<link rel="stylesheet" href="/css/markdown.css">
+
+        
+<link rel="stylesheet" href="/css/fonts.css">
+ 
+         <!--注意：首页既不是post也不是page-->
+        
+        
+        
+<link rel="stylesheet" href="/css/ui.css">
+ 
+        
+<link rel="stylesheet" href="/css/style.css">
+
+
+        
+            <!--返回顶部css-->
+            
+<link rel="stylesheet" href="/css/returnToTop.css">
+
+            
+<link rel="stylesheet" href="/css/unicons.css">
+
+        
+        
+    
+
+    
+        
+<link rel="stylesheet" href="/css/returnToLastPage.css">
+
+    
+    
+   
+<link rel="stylesheet" href="/css/lightgallery-bundle.min.css">
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+    
+    
+        <style>
+            .index-main{
+                max-width:  1200px;
+            }
+        </style>
+
+    
+    
+
+
+
+    
+        <style>
+            .paper-main{
+                max-width:  1200px;
+            }
+        </style>
+
+    
+    
+
+    
+    
+    
+    <body>
+        <script src="/js/darkmode-js.min.js"></script>
+        
+        <script>
+            const options = {
+                bottom: '40px', // default: '32px'
+                right: 'unset', // default: '32px'
+                left: '42px', // default: 'unset'
+                time: '0.3s', // default: '0.3s'
+                mixColor: '#fff', // default: '#fff'
+                backgroundColor: ' #e4e4e4 ',  // default: '#fff'
+                buttonColorDark: '#100f2c',  // default: '#100f2c'
+                buttonColorLight: '#fff', // default: '#fff'
+                saveInCookies: true, // default: true,
+                label: '🌓', // default: ''
+                autoMatchOsTheme: true // default: true
+            }
+            const darkmode = new Darkmode(options);
+            darkmode.showWidget();
+        </script>
+        
+        
+        <div class="paper">
+            
+            
+            
+            
+                <div class="shadow-drop-2-bottom paper-main">
+                    
+
+
+<div class="header">
+    <div class="header-container">
+        <style>
+            .header-img {
+                width: 56px;
+                height: auto;
+                object-fit: cover; /* 保持图片比例 */
+                transition: transform 0.3s ease-in-out; 
+                border-radius: 50%; 
+            }
+            
+        </style>
+        <img 
+            alt="^-^" 
+            cache-control="max-age=86400" 
+            class="header-img" 
+            src="/img/favicon.jpg" 
+        />
+        <div class="header-content">
+            <a class="logo" href="/">LHY&#39;s Blog</a> 
+            <span class="description"></span> 
+        </div>
+    </div>
+    
+   
+    <ul class="nav">
+        
+            
+                <li><a href="/">首页</a></li>
+            
+        
+            
+                <li><a href="/list/">文章</a></li>
+            
+        
+            
+                <li><a href="/tags/">标签</a></li>
+            
+        
+            
+                <li><a href="/categories/">分类</a></li>
+            
+        
+    </ul>
+</div> 
+        
+                    
+                    
+
+                    
+                    
+                    
+                    <!--说明是文章post页面-->
+                    
+                        <div class="post-main">
+    
+
+    
+        
+            
+                <div class="post-main-title" style="text-align: center;">
+                    CMake笔记
+                </div>
+            
+        
+      
+    
+
+    
+
+        
+            <div class="post-head-meta-center">
+        
+                
+                    <span>最近更新：2026-05-14</span> 
+                
+                
+                
+                
+                    
+                        &nbsp; | &nbsp;
+                    
+                    <span id="busuanzi_container_page_pv">
+                        阅读量：<span id="busuanzi_value_page_pv"></span>次
+                    </span>
+                
+            </div>
+    
+
+    <div class="post-md">
+        
+            
+                <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#CMake%E6%9C%80%E5%B0%8F%E7%A4%BA%E4%BE%8B"><span class="post-toc-text">CMake最小示例</span></a></li></ol>
+            
+        
+        <div class=".article-gallery"><blockquote>
+<p><em>刚毕业第一份工作做嵌入式单片机应用开发用的是Keil，后来用C++进行桌面开发用的是Visual Studio，最近想尝试一下用CMake构建项目，本文记录使用CMake的过程用作备忘。</em></p>
+</blockquote>
+<h3 id="CMake最小示例"><a href="#CMake最小示例" class="headerlink" title="CMake最小示例"></a>CMake最小示例</h3><p>在目录下分别创建<code>main.cpp</code>和<code>CMakeLists.txt</code>，后者包含CMake语言中的项目描述。</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cmake_minimum_required</span>(VERSION <span class="number">3.23</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">project</span>(App LANGUAGES CXX)</span><br><span class="line"></span><br><span class="line"><span class="keyword">message</span>(<span class="string">&quot;PROJECT_NAME : $&#123;PROJECT_NAME&#125;&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">add_executable</span>(<span class="variable">$&#123;PROJECT_NAME&#125;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">target_sources</span>(<span class="variable">$&#123;PROJECT_NAME&#125;</span></span><br><span class="line">    PRIVATE</span><br><span class="line">        main.cpp</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p><code>cmake_minimum_required(VERSION 3.23)</code>用来指定CMake的最小版本，必须指定一个版本，不同的版本有不同的特性，一般只有对某些特性的版本差异有需求时才会关注这个设置。</p>
+<p><code>project(App LANGUAGES CXX)</code>用来指定项目名称为App，指定项目语言为CXX，代表C++语言，必须指定项目名称。</p>
+<p><code>message(&quot;PROJECT_NAME : $&#123;PROJECT_NAME&#125;&quot;)</code>用来在构建过程中输出字符串信息，可用来辅助调试定位问题，<code>$&#123;PROJECT_NAME&#125;</code>是获取CMake变量值的写法，<code>PROJECT_NAME</code>是存储<code>project()</code>语句中指定的项目名称的变量，<code>$&#123;&#125;</code>用来取变量的值。</p>
+<p><code>add_executable($&#123;PROJECT_NAME&#125;)</code>用来指定一个可执行程序，可执行程序名称设置为项目名称，或者说，指定了一个CMake中的目标（Target），目标的类型是可执行程序。</p>
+<p><code>target_sources($&#123;PROJECT_NAME&#125; PRIVATE main.cpp)</code>用来描述目标的源文件，第一个参数<code>$&#123;PROJECT_NAME&#125;</code>表示目标的名字，<code>PRIVATE</code>表示依赖关系的权限。</p>
+<p>核心是最后两行，可以这么理解，CMake中存在不同类型的目标，比如可执行程序、库，我们需要使用CMake去描述这些目标的属性，比如目标的名称、目标需要哪些文件来构建、目标之间的依赖关系。在使用诸如<code>target_sources()</code>来描述目标时需要提供目标名称，其中的PRIVATE表示权限，具体来说，目标依赖于<code>main.cpp</code>，但是依赖这个目标的其他目标，不关心也不需要依赖<code>main.cpp</code>，PRIVATE限制了App目标对<code>main.cpp</code>的依赖关系的传递。</p>
+<p>接下来是构建过程。</p>
+<p>1、在CMakeLists.txt所在目录执行命令<code>cmake -B build</code>，这将在相对路径<code>./build</code>中生成构建文件，我的环境是Windows+Visual Studio，CMake会自动检测工具链，并在指定的build目录下生成解决方案文件（App.sln文件），这时候打开解决方案文件可以自行编译生成可执行程序。可以看到，这个命令作用是生成指定工具链的工程文件。</p>
+<p>2、在CMakeLists.txt所在目录执行命令<code>cmake --build build</code>，这将根据相对路径<code>./build</code>中生成的构建文件构建出定义的目标，比如可执行程序。</p>
+<p>当然，我还是习惯使用Visual Studio进行调试，所以CMake目前对我而言就是一个能够替代手动在VS中创建工程的工具，就像是使用markdown语法定义文档格式而不是使用Word等软件格式化文档一样。</p>
+<p><strong>参考链接</strong></p>
+<p><a target="_blank" rel="noopener" href="https://cmake.org/cmake/help/book/mastering-cmake/index.html">mastering-cmake</a></p>
+</div>
+    </div>
+
+    <div class="post-meta">
+        <i>
+        
+            <span>2026-05-14</span>
+            
+                <span>该篇文章被 lianghongyu</span>
+            
+            
+                <span>打上标签:
+                    
+                    
+                        <a href='/tags/C-C/'>
+                            C/C++
+                        </a>
+                    
+                        <a href='/tags/%E6%9E%84%E5%BB%BA%E7%B3%BB%E7%BB%9F/'>
+                            构建系统
+                        </a>
+                    
+                        <a href='/tags/CMake/'>
+                            CMake
+                        </a>
+                    
+                </span>
+             
+             
+                <span>归为分类:
+                    
+                    
+                        <a href='/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/'>
+                            学习笔记
+                        </a>
+                    
+                </span>
+            
+        
+        </i>
+    </div>
+    <br>
+    
+    
+        
+            
+    
+            <div class="post-footer-pre-next">
+                
+
+                
+                    <span class="post-footer-pre-next-last-span-right">下一篇：<a href="/2025/12/03/Windows%E7%B3%BB%E7%BB%9F%E4%BD%BF%E7%94%A8%E5%B8%AE%E5%8A%A9/">Windows系统使用帮助</a>
+                    </span>
+                
+            </div>
+    
+        
+    
+
+    
+        
+
+     
+</div>
+
+
+
+                                      
+                    
+                    
+                    <div class="footer">
+    
+        <span> 
+            © 1949-2025 China 
+
+            
+                
+
+            
+        </span>
+       
+    
+</div>
+
+
+
+<!--这是指一条线往下的内容-->
+<div class="footer-last">
+    
+            <span></span>
+            
+    
+</div>
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+
+    <!--目录-->
+    
+
+    
+<script src="/js/randomHeaderContent.js"></script>
+
+    <!--回到顶部按钮-->
+    
+        
+<script src="/js/returnToTop.js"></script>
+
+    
+
+    
+        
+<script src="/js/returnToLastPage.js"></script>
+
+    
+
+
+
+
+
+<script src="/js/lightgallery/lightgallery.umd.min.js"></script>
+
+
+
+<script src="/js/lightgallery/plugins/lg-thumbnail.umd.min.js"></script>
+
+
+
+<script src="/js/lightgallery/plugins/lg-fullscreen.umd.min.js"></script>
+
+
+<script src="/js/lightgallery/plugins/lg-autoplay.umd.min.js"></script>
+
+
+<script src="/js/lightgallery/plugins/lg-zoom.umd.min.js"></script>
+
+
+<script src="/js/lightgallery/plugins/lg-rotate.umd.min.js"></script>
+
+
+<script src="/js/lightgallery/plugins/lg-paper.umd.min.js"></script>
+
+
+
+
+<script type="text/javascript">
+     
+    if (typeof lightGallery !== "undefined") {
+        var options1 = {
+            selector: '.gallery-item',
+            plugins: [lgThumbnail, lgFullscreen, lgAutoplay, lgZoom, lgRotate, lgPager], // 启用插件
+            thumbnail: true,          // 显示缩略图
+            zoom: true,               // 启用缩放功
+            rotate: true,             // 启用旋转功能能
+            autoplay: true,        // 启用自动播放功能
+            fullScreen: true,      // 启用全屏功能
+            pager: false, //页码,
+            zoomFromOrigin: true,   // 从原始位置缩放
+            actualSize: true,       // 启用查看实际大小的功能
+            enableZoomAfter: 300,    // 延迟缩放，确保图片加载完成后可缩放
+        };
+        lightGallery(document.getElementsByClassName('.article-gallery')[0], options1); // 修复选择器
+    }
+    
+</script>
+
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> 
+
+                </div>
+            
+            
+                <!-- 回到顶部的按钮-->  
+                <div class="progress-wrap shadow-drop-2-bottom">
+                    <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+                        <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"/>
+                    </svg>
+                </div>
+            
+            
+                <!-- 返回的按钮-->  
+                <div class="return-to-last-progress-wrap shadow-drop-2-bottom">
+                    <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+                        <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"/>
+                    </svg>
+                </div>
+            
+    </body>
+</html>
